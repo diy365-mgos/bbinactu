@@ -48,6 +48,7 @@ bool mgos_bbinactu_set_state(mgos_bbinactu_t actuator, bool state) {
     mgos_bbinsens_t sens = MGOS_BBINACTU_SENSCAST(actuator);
     mgos_bvar_t var_state = mgos_bvar_new();
     if (mg_bbinsens_bool_to_state(sens, state, var_state)) {
+      LOG(LL_INFO, ("mgos_bbinactu_set_state()"));
       ret = mgos_bthing_set_state(MGOS_BBINACTU_THINGCAST(actuator), MGOS_BVAR_CONST(var_state));
     }
     mgos_bvar_free(var_state);
@@ -58,6 +59,7 @@ bool mgos_bbinactu_set_state(mgos_bbinactu_t actuator, bool state) {
 bool mgos_bbinactu_toggle_state(mgos_bbinactu_t actuator) {
   bool state;
   if (mgos_bbinsens_get_state(MGOS_BBINACTU_SENSCAST(actuator), &state)) {
+    LOG(LL_INFO, ("mgos_bbinactu_toggle_state()"));
     return mgos_bbinactu_set_state(actuator, !state);
   }
   return false;
